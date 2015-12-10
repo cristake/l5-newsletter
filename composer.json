@@ -1,6 +1,7 @@
 {
     "name": "cristake/l5-newsletter",
     "description": "Laravel 5.1.x package to use with Mailchimp API v3.0",
+    "type": "package",
     "keywords": ["laravel", "newsletter"],
     "license": "MIT",
     "authors": [
@@ -9,11 +10,10 @@
             "email": "cristianiosif@me.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php" : ">=5.4.0",
         "illuminate/support": "~5.0",
-        "drewm/mailchimp-api": "^1.1"
+        "pacely/mailchimp-apiv3": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
