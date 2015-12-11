@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 namespace Cristake\Newsletter;
 
 use Illuminate\Support\ServiceProvider;
-use Mailchimp\Mailchimp;
+// use Mailchimp\Mailchimp;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
@@ -26,35 +26,16 @@ class NewsletterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bindShared('l5-newsletter', function() {
+        $this->app->bind('l5-newsletter', function() {
 
-            $apiKey = $this->app['config']->get('l5-newsletter.mailChimp.apiKey');
+            return new Newsletter;
+            // return new NewsletterInterface;
 
-            if ($apiKey)
-            {
-                return new Mailchimp($apiKey);
-            }
         });
 
-
-        $this->app->bind(
-            'Cristake\Newsletter\Interfaces\NewsletterInterface',
-            'Cristake\Newsletter\Newsletter'
-        );
-
         // $this->app->bind(
-        //     'Spatie\Newsletter\Interfaces\NewsletterCampaignInterface',
-        //     'Spatie\Newsletter\MailChimp\NewsletterCampaign'
-        // );
-
-        // $this->app->bind(
-        //     'Spatie\Newsletter\Interfaces\NewsletterInterface',
-        //     'Spatie\Newsletter\MailChimp\Newsletter'
-        // );
-
-        // $this->app->bind(
-        //     'laravel-newsletter',
-        //     'Spatie\Newsletter\MailChimp\Newsletter'
+        //     'Cristake\Newsletter\Interfaces\NewsletterInterface',
+        //     'Cristake\Newsletter\Newsletter'
         // );
     }
 }
