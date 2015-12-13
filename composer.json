@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cristake\\Newsletter\\Test\\": "tests"
+            "Cristake\\Newsletter\\Test\\MailChimp\\": "tests"
         }
     },
     "minimum-stability": "dev"

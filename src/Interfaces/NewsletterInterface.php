@@ -4,18 +4,57 @@ namespace Cristake\Newsletter\Interfaces;
 
 interface NewsletterInterface
 {
-	/**
-	 * Get a list by its ID
-	 * @param  string $listID List ID
-	 * @return collection       
-	 */
-    public function getList($listID = '', array $options = [], $method = 'GET');
+    /**
+     * Display all available lists
+     *
+	 * @return Illuminate\Support\Collection       
+     */
+	public function allLists(array $options = []);
 
 
     /**
      * Create a new list
-     * @param  array  $parameters Pass the details for the list
+     *
+     * Mandatory parameters:
+     * name, permission_reminder, email_type_option, contact, campaign_defaults
+     *
+     * @param  array  $parameters
+     *
      * @return mixed  
      */
-	public function createList(array $parameters = []);
+    public function createList(array $parameters);
+
+
+    /**
+     * Shows the list details
+     *
+     * @param  string  $listId
+     * @param  array  $options
+     *
+     * @return mixed  
+     */
+    public function showList($listId, array $options = []);
+
+
+    /**
+     * Delete a list
+     *
+     * @param  string  $listId
+     *
+     * @return mixed  
+     */
+    public function deleteList($listId);
+
+
+    /**
+    
+     * List all members of a list
+     *
+     * @param  string  $listId
+     * @param  array  $options
+     *
+     * @return mixed  
+     */
+    public function listMembers($listId, array $options = []);
+
 }
