@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4f639e04c2bad9b7005c1d75043c0a78",
+    "hash": "da3170daa9df330df95c053d61bb393c",
     "content-hash": "689d820aee62f0fc4b1f6b642611084f",
     "packages": [
         {
@@ -1134,12 +1134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "826f28f4cd17b31e4d42aa21729e52f88d91bc39"
+                "reference": "e871a2a0cf62b56c36b4781e99b50c6bf08fab77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/826f28f4cd17b31e4d42aa21729e52f88d91bc39",
-                "reference": "826f28f4cd17b31e4d42aa21729e52f88d91bc39",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/e871a2a0cf62b56c36b4781e99b50c6bf08fab77",
+                "reference": "e871a2a0cf62b56c36b4781e99b50c6bf08fab77",
                 "shasum": ""
             },
             "require": {
@@ -1186,7 +1186,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-11-24 09:53:50"
+            "time": "2015-12-10 20:38:17"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1434,12 +1434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7438c43bc2bbb2febe1723eb595b1c49283a26ad"
+                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7438c43bc2bbb2febe1723eb595b1c49283a26ad",
-                "reference": "7438c43bc2bbb2febe1723eb595b1c49283a26ad",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ea76b17bced0500a28098626b84eda12dbcf119c",
+                "reference": "ea76b17bced0500a28098626b84eda12dbcf119c",
                 "shasum": ""
             },
             "require": {
@@ -1448,7 +1448,7 @@
                 "ext-pcre": "*",
                 "ext-reflection": "*",
                 "ext-spl": "*",
-                "php": "~5.3.3|~5.4|~5.5|~5.6",
+                "php": ">=5.3.3",
                 "phpspec/prophecy": "^1.3.1",
                 "phpunit/php-code-coverage": "~2.1",
                 "phpunit/php-file-iterator": "~1.4",
@@ -1498,7 +1498,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-12-10 07:48:52"
+            "time": "2015-12-12 07:45:58"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2149,12 +2149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "345e425a66925ddfe7b0e08c0ff4568cbe3d6305"
+                "reference": "fada1b8a582c7374ca60f04466c8da572f07383d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/345e425a66925ddfe7b0e08c0ff4568cbe3d6305",
-                "reference": "345e425a66925ddfe7b0e08c0ff4568cbe3d6305",
+                "url": "https://api.github.com/repos/symfony/process/zipball/fada1b8a582c7374ca60f04466c8da572f07383d",
+                "reference": "fada1b8a582c7374ca60f04466c8da572f07383d",
                 "shasum": ""
             },
             "require": {
@@ -2190,7 +2190,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2015-12-05 18:15:19"
+            "time": "2015-12-10 17:31:22"
         },
         {
             "name": "symfony/yaml",
