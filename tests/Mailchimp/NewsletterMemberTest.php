@@ -25,10 +25,10 @@ class NewsletterMemberTest extends TestBase
     {
         $this->member
             ->shouldReceive('create')
-            ->with('listId', ['params']);
+            ->with('listId', 'cristianiosif@me.com', 'subscribed', ['mergeFields']);
 
         $this->newsletter
-            ->subscribe('listId', ['params']);
+            ->subscribe('listId', 'cristianiosif@me.com', 'subscribed', ['mergeFields']);
     }
 
     /**

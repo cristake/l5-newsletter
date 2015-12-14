@@ -61,12 +61,14 @@ interface NewsletterInterface
     /**
      * Subscribe a new member to a list
      *
-     * @param $listid
-     * @param $params
+     * @param string $listid
+     * @param string $email
+     * @param string $status
+     * @param array $mergeFields
      *
-     * @return Illuminate\Support\Collection       
+     * @return Illuminate\Support\Collection
      */
-    public function subscribe($listId, array $params);
+    public function subscribe($listId, $email, $status, array $mergeFields = []);
 
 
     /**

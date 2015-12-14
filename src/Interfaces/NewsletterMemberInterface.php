@@ -19,11 +19,13 @@ interface NewsletterMemberInterface
      * Create a new member
      *
      * @param  string $listId
-     * @param  array $params
+     * @param  string $email
+     * @param  string $status
+     * @param  array $mergeFields
      *
      * @return mixed  
      */
-    public function create($listId, array $params);
+    public function create($listId, $email, $status, array $mergeFields = []);
 
 
     /**
