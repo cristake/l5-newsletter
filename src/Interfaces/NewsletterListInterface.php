@@ -11,7 +11,7 @@ interface NewsletterListInterface
 	 *
 	 * @return Illuminate\Support\Collection       
 	 */
-    public function all(array $options = []);
+    public function index(array $options = []);
 
 
     /**

@@ -29,6 +29,5 @@
         "psr-4": {
             "Cristake\\Newsletter\\Test\\MailChimp\\": "tests"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

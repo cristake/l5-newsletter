@@ -2,29 +2,19 @@
 
 namespace Cristake\Newsletter\Test\MailChimp;
 
-use Mockery;
-use PHPUnit_Framework_TestCase;
-use Cristake\Newsletter\Newsletter;
-
-class NewsletterListTest extends PHPUnit_Framework_TestCase
+class NewsletterListTest extends TestBase
 {
-
-    protected $newsletter;
-
-    public function setUp()
-    {
-        $this->newsletter = Mockery::mock('Cristake\Newsletter\Newsletter');
-    }
-
-
     /**
      * @test
      */
     public function it_shows_all_available_lists()
     {
-        $this->newsletter->shouldReceive('allLists');
+        $this->newsletter
+            ->shouldReceive('allLists')
+            ->with('lists.id, lists.name, lists.stats.member_count');
 
-        $this->newsletter->allLists();
+        $this->newsletter
+            ->allLists('lists.id, lists.name, lists.stats.member_count');
     }
 
 
@@ -33,9 +23,11 @@ class NewsletterListTest extends PHPUnit_Framework_TestCase
      */
     public function it_can_create_a_list()
     {
-        $this->newsletter->shouldReceive('createList')->with(['name']);
+        $this->newsletter
+            ->shouldReceive('createList')->with('listName');
 
-        $this->newsletter->createList(['name']);
+        $this->newsletter
+            ->createList('listName');
     }
 
 
@@ -44,9 +36,12 @@ class NewsletterListTest extends PHPUnit_Framework_TestCase
      */
     public function it_shows_a_list_details()
     {
-        $this->newsletter->shouldReceive('showLists')->with('list_id');
+        $this->newsletter
+            ->shouldReceive('showLists')
+            ->with('listId');
 
-        $this->newsletter->showLists('list_id');
+        $this->newsletter
+            ->showLists('listId');
     }
 
 
@@ -55,8 +50,11 @@ class NewsletterListTest extends PHPUnit_Framework_TestCase
      */
     public function it_can_delete_a_list()
     {
-        $this->newsletter->shouldReceive('deleteList')->with('list_id');
+        $this->newsletter
+            ->shouldReceive('deleteList')
+            ->with('listId');
 
-        $this->newsletter->deleteList('list_id');
+        $this->newsletter
+            ->deleteList('listId');
     }
 }

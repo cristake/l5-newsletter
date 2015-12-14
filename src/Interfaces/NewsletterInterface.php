@@ -57,4 +57,16 @@ interface NewsletterInterface
      */
     public function listMembers($listId, array $options = []);
 
+
+    /**
+     * Show a member from a list
+     *
+     * @param  string  $listId
+     * @param  string  $memberId
+     * @param  array  $options
+     *
+     * @return mixed  
+     */
+    public function showMember($listId, $memberId, array $options = []);
+
 }

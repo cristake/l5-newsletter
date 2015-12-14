@@ -11,7 +11,7 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
      *
      * @return Illuminate\Support\Collection       
      */
-    public function all(array $options = [])
+    public function index(array $options = [])
     {
         return $this->mailchimp
             ->get('lists', $options);
@@ -42,7 +42,7 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
     public function show($listId, array $options = [])
     {
         return $this->mailchimp
-            ->get('lists/' . $listId, $options);
+            ->get(sprintf('lists/%s', $listId), $options);
     }
 
     /**
@@ -55,7 +55,7 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
     public function destroy($listId)
     {
         return $this->mailchimp
-            ->delete('lists/' . $listId);
+            ->delete(sprintf('lists/%s', $listId));
     }
 
 

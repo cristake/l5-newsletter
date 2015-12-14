@@ -57,7 +57,7 @@ class Newsletter implements NewsletterInterface
     public function allLists(array $options = [])
     {
     	return $this->list
-            ->all($options);
+            ->index($options);
     }
 
     /**
@@ -122,5 +122,20 @@ class Newsletter implements NewsletterInterface
             ->index($listId, $options);
     }
 
+
+    /**
+     * Show a member from a list
+     *
+     * @param  string  $listId
+     * @param  string  $memberId
+     * @param  array  $options
+     *
+     * @return mixed  
+     */
+    public function showMember($listId, $memberId, array $options = [])
+    {
+        return $this->member
+            ->show($listId, $memberId, $options);
+    }
 
 }
