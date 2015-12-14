@@ -19,13 +19,13 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
 
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new resource in storage.
      *
      * @param  array  $parameters Pass the details for the list
      *
      * @return mixed  
      */
-    public function store(array $parameters)
+    public function create(array $parameters)
     {
 		return $this->mailchimp
             ->post('lists', $parameters);
@@ -36,6 +36,7 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
      * Display the specified resource.
      *
      * @param  string $listId List ID
+     * @param  array $options
      *
      * @return Illuminate\Support\Collection       
      */

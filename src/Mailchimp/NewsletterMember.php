@@ -22,6 +22,24 @@ class NewsletterMember extends MailchimpBase implements NewsletterMemberInterfac
 
 
     /**
+     * Create a new member
+     *
+     * @param  string $listId
+     * @param  array $params
+     *
+     * @return mixed  
+     */
+    public function create($listId, array $params)
+    {
+        return $this->mailchimp
+            ->post(
+                sprintf('lists/%s/members', $listId),
+                $options
+            );
+    }
+
+
+    /**
      * Display the specified resource.
      *
      * @param  string $listId List ID

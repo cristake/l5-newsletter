@@ -9,12 +9,12 @@ class NewsletterListTest extends TestBase
      */
     public function it_shows_all_available_lists()
     {
-        $this->newsletter
-            ->shouldReceive('allLists')
-            ->with('lists.id, lists.name, lists.stats.member_count');
+        $this->list
+            ->shouldReceive('index')
+            ->with(['fields' => 'lists.id, lists.name, lists.stats.member_count']);
 
         $this->newsletter
-            ->allLists('lists.id, lists.name, lists.stats.member_count');
+            ->allLists(['fields' => 'lists.id, lists.name, lists.stats.member_count']);
     }
 
 
@@ -23,11 +23,12 @@ class NewsletterListTest extends TestBase
      */
     public function it_can_create_a_list()
     {
-        $this->newsletter
-            ->shouldReceive('createList')->with('listName');
+        $this->list
+            ->shouldReceive('create')
+            ->with(['listName']);
 
         $this->newsletter
-            ->createList('listName');
+            ->createList(['listName']);
     }
 
 
@@ -36,12 +37,12 @@ class NewsletterListTest extends TestBase
      */
     public function it_shows_a_list_details()
     {
-        $this->newsletter
-            ->shouldReceive('showLists')
-            ->with('listId');
+        $this->list
+            ->shouldReceive('show')
+            ->with('listId', ['options']);
 
         $this->newsletter
-            ->showLists('listId');
+            ->showList('listId', ['options']);
     }
 
 
@@ -50,8 +51,8 @@ class NewsletterListTest extends TestBase
      */
     public function it_can_delete_a_list()
     {
-        $this->newsletter
-            ->shouldReceive('deleteList')
+        $this->list
+            ->shouldReceive('destroy')
             ->with('listId');
 
         $this->newsletter

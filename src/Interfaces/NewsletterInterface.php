@@ -20,7 +20,7 @@ interface NewsletterInterface
      *
      * @param  array  $parameters
      *
-     * @return mixed  
+     * @return Illuminate\Support\Collection       
      */
     public function createList(array $parameters);
 
@@ -31,7 +31,7 @@ interface NewsletterInterface
      * @param  string  $listId
      * @param  array  $options
      *
-     * @return mixed  
+     * @return Illuminate\Support\Collection       
      */
     public function showList($listId, array $options = []);
 
@@ -41,7 +41,7 @@ interface NewsletterInterface
      *
      * @param  string  $listId
      *
-     * @return mixed  
+     * @return Illuminate\Support\Collection       
      */
     public function deleteList($listId);
 
@@ -53,9 +53,20 @@ interface NewsletterInterface
      * @param  string  $listId
      * @param  array  $options
      *
-     * @return mixed  
+     * @return Illuminate\Support\Collection       
      */
     public function listMembers($listId, array $options = []);
+
+
+    /**
+     * Subscribe a new member to a list
+     *
+     * @param $listid
+     * @param $params
+     *
+     * @return Illuminate\Support\Collection       
+     */
+    public function subscribe($listId, array $params);
 
 
     /**
@@ -65,8 +76,18 @@ interface NewsletterInterface
      * @param  string  $memberId
      * @param  array  $options
      *
-     * @return mixed  
+     * @return Illuminate\Support\Collection       
      */
     public function showMember($listId, $memberId, array $options = []);
 
+
+    /**
+     * Delete a member from a list
+     *
+     * @param  string  $listId
+     * @param  string  $memberId
+     *
+     * @return Illuminate\Support\Collection       
+     */
+    public function deleteMember($listId, $memberId);
 }

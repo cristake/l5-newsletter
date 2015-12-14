@@ -73,7 +73,7 @@ class Newsletter implements NewsletterInterface
     public function createList(array $parameters)
     {
     	return $this->list
-            ->store($parameters);
+            ->create($parameters);
     }
 
 
@@ -124,6 +124,21 @@ class Newsletter implements NewsletterInterface
 
 
     /**
+     * Subscribe a new member to a list
+     *
+     * @param $listid
+     * @param $params
+     *
+     * @return Illuminate\Support\Collection       
+     */
+    public function subscribe($listId, array $params)
+    {
+        return $this->member
+            ->create($listId, $params);
+    }
+
+
+    /**
      * Show a member from a list
      *
      * @param  string  $listId
@@ -138,4 +153,18 @@ class Newsletter implements NewsletterInterface
             ->show($listId, $memberId, $options);
     }
 
+
+    /**
+     * Delete a member from a list
+     *
+     * @param  string  $listId
+     * @param  string  $memberId
+     *
+     * @return mixed  
+     */
+    public function deleteMember($listId, $memberId)
+    {
+        return $this->member
+            ->destroy($listId, $memberId);
+    }
 }

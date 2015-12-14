@@ -9,31 +9,53 @@ class NewsletterMemberTest extends TestBase
      */
     public function it_can_show_all_members_from_a_list()
     {
-        $this->newsletter->shouldReceive('listMembers')->with('listId');
+        $this->member
+            ->shouldReceive('index')
+            ->with('listId', ['options']);
 
-        $this->newsletter->listMembers('listId');
+        $this->newsletter
+            ->listMembers('listId', ['options']);
     }
 
+
+    /**
+     * @test
+     */
+    public function it_can_subscribe_a_new_member_to_a_list()
+    {
+        $this->member
+            ->shouldReceive('create')
+            ->with('listId', ['params']);
+
+        $this->newsletter
+            ->subscribe('listId', ['params']);
+    }
 
     /**
      * @test
      */
     public function it_can_show_a_member_from_a_list()
     {
-        $this->newsletter->shouldReceive('showMember')->with('listId', 'memberId');
+        $this->member
+            ->shouldReceive('show')
+            ->with('listId', 'memberId', ['options']);
 
-        $this->newsletter->showMember('listId', 'memberId');
+        $this->newsletter
+            ->showMember('listId', 'memberId', ['options']);
     }
 
 
     /**
      * @test
      */
-    // public function it_delete_a_member_from_a_list()
-    // {
-    //     $this->newsletter->shouldReceive('showLists')->with('list_id');
+    public function it_delete_a_member_from_a_list()
+    {
+        $this->member
+            ->shouldReceive('destroy')
+            ->with('listId', 'memberId');
 
-    //     $this->newsletter->showLists('list_id');
-    // }
+        $this->newsletter
+            ->deleteMember('listId', 'memberId');
+    }
 
 }

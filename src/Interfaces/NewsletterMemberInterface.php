@@ -16,6 +16,17 @@ interface NewsletterMemberInterface
 
 
     /**
+     * Create a new member
+     *
+     * @param  string $listId
+     * @param  array $params
+     *
+     * @return mixed  
+     */
+    public function create($listId, array $params);
+
+
+    /**
      * List a member from a list
      *
 	 * @param  string $listId

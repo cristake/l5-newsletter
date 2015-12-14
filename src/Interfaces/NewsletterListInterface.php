@@ -15,19 +15,20 @@ interface NewsletterListInterface
 
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new resource in storage.
      *
      * @param  array  $parameters Pass the details for the list
      *
      * @return mixed  
      */
-	public function store(array $parameters);
+    public function create(array $parameters);
 
 
 	/**
      * Display the specified resource.
 	 *
 	 * @param  string $listId
+     * @param array $options
 	 *
 	 * @return Illuminate\Support\Collection       
 	 */
