@@ -25,10 +25,19 @@ class NewsletterList extends MailchimpBase implements NewsletterListInterface
      *
      * @return mixed  
      */
-    public function create(array $parameters)
+    public function create($name, $permission_reminder, $email_type_option = false, array $contact, array $campaign_defaults)
     {
 		return $this->mailchimp
-            ->post('lists', $parameters);
+            ->post(
+                'lists',
+                [
+                    'name' => $name,
+                    'permission_reminder' => 'You are receiving this because you signed up for updates on http://www.edugent.com.',
+                    'email_type_option' => $email_type_option,
+                    'contact' => $contact,
+                    'campaign_defaults' => $campaign_defaults
+                ]
+            );
     }
 
 

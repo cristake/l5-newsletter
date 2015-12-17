@@ -21,7 +21,7 @@ interface NewsletterListInterface
      *
      * @return mixed  
      */
-    public function create(array $parameters);
+    public function create($name, $permission_reminder, $email_type_option = false, array $contact, array $campaign_defaults);
 
 
 	/**

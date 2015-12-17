@@ -24,21 +24,20 @@ class NewsletterMember extends MailchimpBase implements NewsletterMemberInterfac
     /**
      * Create a new member
      *
-     * @param  string $listId
-     * @param  string $email
-     * @param  string $status
-     * @param  array $mergeFields
+     * @param $email        string
+     * @param $mergeFields  associative_array
+     * @param $listid       string
      *
      * @return mixed  
      */
-    public function create($listId, $email, $status, array $mergeFields = [])
+    public function create($email, array $mergeFields = [], $listId)
     {
         return $this->mailchimp
             ->post(
                 sprintf('lists/%s/members', $listId),
                 [
-                    'email_address' => $email,
-                    'status' => $status,
+                    'email' => $email,
+                    'status' => 'subscribed',
                     'merge_fields' => $mergeFields
                 ]
             );
@@ -48,7 +47,7 @@ class NewsletterMember extends MailchimpBase implements NewsletterMemberInterfac
     /**
      * Display the specified resource.
      *
-     * @param  string $listId List ID
+     * @param $listid       string
      *
      * @return Illuminate\Support\Collection       
      */
@@ -63,25 +62,20 @@ class NewsletterMember extends MailchimpBase implements NewsletterMemberInterfac
 
 
     /**
-     * Create a new member
+     * Update member
      *
-     * @param  string $listId
-     * @param  string $email
-     * @param  string $status
-     * @param  array $mergeFields
+     * @param $listid       string
+     * @param $memberId     string
+     * @param $options      associative_array
      *
      * @return mixed  
      */
-    public function update($listId, $email, $status = 'subscribed', array $mergeFields = [])
+    public function update($listId, $memberId, array $options = [])
     {
         return $this->mailchimp
-            ->post(
-                sprintf('lists/%s/members', $listId),
-                [
-                    'email_address' => $email,
-                    'status' => $status,
-                    'merge_fields' => $mergeFields
-                ]
+            ->patch(
+                sprintf('lists/%s/members/%s', $listId, $memberId),
+                $options
             );
     }
 
@@ -89,8 +83,8 @@ class NewsletterMember extends MailchimpBase implements NewsletterMemberInterfac
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string $listId
-     * @param  string $memberId
+     * @param $listid       string
+     * @param $memberId     string
      *
      * @return mixed  
      */

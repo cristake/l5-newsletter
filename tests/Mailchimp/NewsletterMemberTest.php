@@ -14,7 +14,7 @@ class NewsletterMemberTest extends TestBase
             ->with('listId', ['options']);
 
         $this->newsletter
-            ->listMembers('listId', ['options']);
+            ->getMembersFromList('listId', ['options']);
     }
 
 
@@ -25,10 +25,23 @@ class NewsletterMemberTest extends TestBase
     {
         $this->member
             ->shouldReceive('create')
-            ->with('listId', 'cristianiosif@me.com', 'subscribed', ['mergeFields']);
+            ->with('email', ['params'], 'listId');
 
         $this->newsletter
-            ->subscribe('listId', 'cristianiosif@me.com', 'subscribed', ['mergeFields']);
+            ->subscribe('email', ['params'], 'listId');
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_unsubscribe_a_member_from_a_list()
+    {
+        $this->member
+            ->shouldReceive('update')
+            ->with('listId', 'memberId', ['status' => 'unsubscribed']);
+
+        $this->newsletter
+            ->unsubscribe('listId', 'memberId');
     }
 
     /**

@@ -14,7 +14,7 @@ class NewsletterListTest extends TestBase
             ->with(['fields' => 'lists.id, lists.name, lists.stats.member_count']);
 
         $this->newsletter
-            ->allLists(['fields' => 'lists.id, lists.name, lists.stats.member_count']);
+            ->getAllLists(['fields' => 'lists.id, lists.name, lists.stats.member_count']);
     }
 
 
@@ -25,10 +25,10 @@ class NewsletterListTest extends TestBase
     {
         $this->list
             ->shouldReceive('create')
-            ->with(['listName']);
+            ->with('Edugent', 'Permission reminder', false, [], []);
 
         $this->newsletter
-            ->createList(['listName']);
+            ->createList('Edugent');
     }
 
 

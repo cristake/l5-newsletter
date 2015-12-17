@@ -54,7 +54,7 @@ class Newsletter implements NewsletterInterface
      *
      * @return Illuminate\Support\Collection       
      */
-    public function allLists(array $options = [])
+    public function getAllLists(array $options = [])
     {
     	return $this->list
             ->index($options);
@@ -66,22 +66,27 @@ class Newsletter implements NewsletterInterface
      * Mandatory parameters:
      * name, permission_reminder, email_type_option, contact, campaign_defaults
      *
-     * @param  array  $parameters
+     * @param   $parameters     array
      *
      * @return mixed  
      */
-    public function createList(array $parameters)
+    public function createList($name)
     {
+        $permission_reminder = 'Permission reminder';
+        $email_type_option = false;
+        $contact = [];
+        $campaign_defaults = [];
+
     	return $this->list
-            ->create($parameters);
+            ->create($name, $permission_reminder, $email_type_option, $contact, $campaign_defaults);
     }
 
 
     /**
      * Shows the list details
      *
-     * @param  string  $listId
-     * @param  array  $options
+     * @param $listid       string
+     * @param $options      associative_array
      *
      * @return mixed  
      */
@@ -96,7 +101,7 @@ class Newsletter implements NewsletterInterface
     /**
      * Delete a list
      *
-     * @param  string  $listId
+     * @param $listid       string
      *
      * @return mixed  
      */
@@ -111,12 +116,12 @@ class Newsletter implements NewsletterInterface
     
      * List all members of a list
      *
-     * @param  string  $listId
-     * @param  array  $options
+     * @param $listid       string
+     * @param $options      associative_array
      *
      * @return mixed  
      */
-    public function listMembers($listId, array $options = [])
+    public function getMembersFromList($listId, array $options = [])
     {
         return $this->member
             ->index($listId, $options);
@@ -126,26 +131,40 @@ class Newsletter implements NewsletterInterface
     /**
      * Subscribe a new member to a list
      *
-     * @param string $listid
-     * @param string $email
-     * @param string $status
-     * @param array $mergeFields
+     * @param $email        string
+     * @param $mergeFields  array
+     * @param $listId       string
      *
      * @return Illuminate\Support\Collection       
      */
-    public function subscribe($listId, $email, $status, array $mergeFields = [])
+    public function subscribe($email, array $mergeFields, $listId)
     {
         return $this->member
-            ->create($listId, $email, $status, $mergeFields);
+            ->create($email, $mergeFields, $listId);
+    }
+
+
+    /**
+     * Unsubscribe a member from a list
+     *
+     * @param $listid       string
+     * @param $memberId     string
+     *
+     * @return Illuminate\Support\Collection       
+     */
+    public function unsubscribe($listId, $memberId)
+    {
+        return $this->member
+            ->update($listId, $memberId, ['status' => 'unsubscribed']);
     }
 
 
     /**
      * Show a member from a list
      *
-     * @param  string  $listId
-     * @param  string  $memberId
-     * @param  array  $options
+     * @param $listid       string
+     * @param $memberId     string
+     * @param $options      associative_array
      *
      * @return mixed  
      */
@@ -159,8 +178,8 @@ class Newsletter implements NewsletterInterface
     /**
      * Delete a member from a list
      *
-     * @param  string  $listId
-     * @param  string  $memberId
+     * @param $listid       string
+     * @param $memberId     string
      *
      * @return mixed  
      */

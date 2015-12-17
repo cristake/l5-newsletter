@@ -7,8 +7,8 @@ interface NewsletterMemberInterface
     /**
      * List all the members from a list
      *
-	 * @param  string $listId
-	 * @param  array $options
+     * @param $listid       string
+     * @param $options      associative_array
 	 *
      * @return mixed  
      */
@@ -18,22 +18,21 @@ interface NewsletterMemberInterface
     /**
      * Create a new member
      *
-     * @param  string $listId
-     * @param  string $email
-     * @param  string $status
-     * @param  array $mergeFields
+     * @param $email        string
+     * @param $mergeFields  associative_array
+     * @param $listid       string
      *
      * @return mixed  
      */
-    public function create($listId, $email, $status, array $mergeFields = []);
+    public function create($email, array $mergeFields = [], $listId);
 
 
     /**
      * List a member from a list
      *
-	 * @param  string $listId
-	 * @param  string $memberId
-	 * @param  array $options
+     * @param $listid       string
+     * @param $memberId     string
+     * @param $options      associative_array
 	 *
      * @return mixed  
      */
@@ -41,10 +40,21 @@ interface NewsletterMemberInterface
 
 
     /**
+     * Update member
+     *
+     * @param $listid       string
+     * @param $memberId     string
+     * @param $options      associative_array
+     *
+     * @return mixed  
+     */
+    public function update($listId, $memberId, array $options = []);
+
+    /**
      * Remove the specified resource from storage.
      *
-     * @param  string $listId
-     * @param  string $memberId
+     * @param $listid       string
+     * @param $memberId     string
      *
      * @return mixed  
      */
