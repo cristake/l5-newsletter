@@ -1,18 +1,18 @@
 {
-    "name": "Cristake/l5-newsletter",
-    "description": "Manage newsletters in Laravel 5",
+    "name": "cristake/l5-newsletter",
+    "description": "Mailchimp newsletters in Laravel 5",
     "keywords": [
         "laravel",
         "newsletter",
         "mailchimp"
     ],
-    "homepage": "https://github.com/Cristake/l5-newsletter",
+    "homepage": "https://github.com/cristake/l5-newsletter",
     "license": "MIT",
     "authors": [
         {
-            "name": "Freek Van der Herten",
-            "email": "freek@Cristake.be",
-            "homepage": "https://murze.be",
+            "name": "Cristian Iosif",
+            "email": "cristianiosif@me.com",
+            "homepage": "",
             "role": "Developer"
         }
     ],
