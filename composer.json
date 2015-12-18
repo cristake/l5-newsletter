@@ -1,13 +1,19 @@
 {
-    "name": "cristake/l5-newsletter",
-    "description": "Laravel 5.1.x package to use with Mailchimp API v3.0",
-    "type": "package",
-    "keywords": ["laravel", "newsletter"],
+    "name": "Cristake/l5-newsletter",
+    "description": "Manage newsletters in Laravel 5",
+    "keywords": [
+        "laravel",
+        "newsletter",
+        "mailchimp"
+    ],
+    "homepage": "https://github.com/Cristake/l5-newsletter",
     "license": "MIT",
     "authors": [
         {
-            "name": "Cristian Iosif",
-            "email": "cristianiosif@me.com"
+            "name": "Freek Van der Herten",
+            "email": "freek@Cristake.be",
+            "homepage": "https://murze.be",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -27,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cristake\\Newsletter\\Test\\MailChimp\\": "tests"
+            "Cristake\\Newsletter\\Test\\": "tests"
         }
     }
 }

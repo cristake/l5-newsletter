@@ -1,191 +1,161 @@
 <?php
 
-namespace Cristake\Newsletter\Mailchimp;
+namespace Cristake\Newsletter\MailChimp;
 
-use Exception;
-use Mailchimp\Mailchimp;
 use Cristake\Newsletter\Interfaces\NewsletterInterface;
+use Cristake\Newsletter\Interfaces\NewsletterCampaignInterface;
 use Cristake\Newsletter\Interfaces\NewsletterListInterface;
-use Cristake\Newsletter\Interfaces\NewsletterMemberInterface;
 
 class Newsletter implements NewsletterInterface
 {
     /**
-     * @var string
+     * @var NewsletterCampaign
      */
-    private $apikey;
-
-
+    private $campaign;
     /**
      * @var NewsletterList
      */
     private $list;
 
-
-    /**
-     * @var NewsletterMember
-     */
-    private $member;
-
-
-    /**
-     * @var NewsletterCampaign
-     */
-    // private $campaign;
-
-
-    /**
-     * Inject the subresources
-     */
-    public function __construct(
-        NewsletterListInterface $list,
-        NewsletterMemberInterface $member
-    	// NewsletterCampaignInterface $campaign
-	)
+    public function __construct(NewsletterCampaignInterface $campaign, NewsletterListInterface $list)
     {
+        $this->campaign = $campaign;
         $this->list = $list;
-        $this->member = $member;
-        // $this->campaign = $campaign;
-    }
-
-
-    /**
-     * Display all available lists
-     *
-     * @return Illuminate\Support\Collection       
-     */
-    public function getAllLists(array $options = [])
-    {
-    	return $this->list
-            ->index($options);
     }
 
     /**
-     * Create a new list
+     * Create a new newsletter campaign.
      *
-     * Mandatory parameters:
-     * name, permission_reminder, email_type_option, contact, campaign_defaults
+     * @param $subject
+     * @param $content
+     * @param $list
      *
-     * @param   $parameters     array
-     *
-     * @return mixed  
+     * @return mixed
      */
-    public function createList($name)
+    public function createCampaign($subject, $content, $list = '')
     {
-        $permission_reminder = 'Permission reminder';
-        $email_type_option = false;
-        $contact = [];
-        $campaign_defaults = [];
-
-    	return $this->list
-            ->create($name, $permission_reminder, $email_type_option, $contact, $campaign_defaults);
+        return $this->campaign
+            ->create($subject, $content, $list);
     }
 
-
     /**
-     * Shows the list details
+     * Update a newsletter campaign.
      *
-     * @param $listid       string
-     * @param $options      associative_array
+     * @param $campaignId string
+     * @param $name string
+     * @param $value array
      *
-     * @return mixed  
+     * @return mixed
      */
-    public function showList($listId, array $options = [])
+    public function updateCampaign($campaignId, $name, $value = [])
     {
-        return $this->list
-            ->show($listId, $options);
-
+        return $this->campaign
+            ->update($campaignId, $name, $value);
     }
 
-
     /**
-     * Delete a list
+     * Delete a newsletter campaign.
      *
-     * @param $listid       string
+     * @param $campaignId
      *
-     * @return mixed  
+     * @return mixed
      */
-    public function deleteList($listId)
+    public function deleteCampaign($campaignId)
     {
-    	return $this->list
-            ->destroy($listId);
+        return $this->campaign
+            ->delete($campaignId);
     }
 
-
     /**
-    
-     * List all members of a list
+     * Send a test newsletter campaign.
      *
-     * @param $listid       string
-     * @param $options      associative_array
+     * @param string       $campaignId
+     * @param string|array $emails
+     * @param string       $sendType
      *
-     * @return mixed  
+     * @return mixed
      */
-    public function getMembersFromList($listId, array $options = [])
+    public function sendTestCampaign($campaignId, $emails, $sendType = '')
     {
-        return $this->member
-            ->index($listId, $options);
+        if (!is_array($emails)) {
+            $emails = [$emails];
+        }
+
+        return $this
+            ->campaign
+            ->sendTest($campaignId, $emails, $sendType);
     }
 
-
     /**
-     * Subscribe a new member to a list
+     * Send a newsletter campaign.
      *
-     * @param $email        string
-     * @param $mergeFields  array
-     * @param $listId       string
+     * @param $campaignId string
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function subscribe($email, array $mergeFields, $listId)
+    public function sendCampaign($campaignId)
     {
-        return $this->member
-            ->create($email, $mergeFields, $listId);
+        return $this
+            ->campaign
+            ->send($campaignId);
     }
 
-
     /**
-     * Unsubscribe a member from a list
+     * Subscribe the email address to given list.
      *
-     * @param $listid       string
-     * @param $memberId     string
+     * @param $email
+     * @param array  $mergeVars
+     * @param string $list
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function unsubscribe($listId, $memberId)
+    public function subscribe($email, $mergeVars = [],  $list = '')
     {
-        return $this->member
-            ->update($listId, $memberId, ['status' => 'unsubscribed']);
+        return $this
+            ->list
+            ->subscribe($email, $mergeVars, $list);
     }
 
-
     /**
-     * Show a member from a list
+     * Update a member subscribed to a list.
      *
-     * @param $listid       string
-     * @param $memberId     string
-     * @param $options      associative_array
+     * @param $email
+     * @param array  $mergeVars
+     * @param string $list
      *
-     * @return mixed  
+     * @return mixed
      */
-    public function showMember($listId, $memberId, array $options = [])
+    public function updateMember($email, $mergeVars = [],  $list = '')
     {
-        return $this->member
-            ->show($listId, $memberId, $options);
+        return $this
+            ->list
+            ->updateMember($email, $mergeVars, $list);
     }
 
+    /**
+     * Unsubscribe the email address to given list.
+     *
+     * @param $email
+     * @param $list
+     *
+     * @return mixed
+     */
+    public function unsubscribe($email, $list = '')
+    {
+        return $this
+            ->list
+            ->unsubscribe($email, $list);
+    }
 
     /**
-     * Delete a member from a list
+     * Get the instance of the underlying api.
      *
-     * @param $listid       string
-     * @param $memberId     string
-     *
-     * @return mixed  
+     * @return mixed
      */
-    public function deleteMember($listId, $memberId)
+    public function getApi()
     {
-        return $this->member
-            ->destroy($listId, $memberId);
+        return $this
+            ->list
+            ->getApi();
     }
 }

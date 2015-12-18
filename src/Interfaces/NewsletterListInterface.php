@@ -4,44 +4,36 @@ namespace Cristake\Newsletter\Interfaces;
 
 interface NewsletterListInterface
 {
-	/**
-     * Display a listing of the resource.
+    /**
+     * Subscribe the email address to given list.
      *
-     * @param array $options
-	 *
-	 * @return Illuminate\Support\Collection       
-	 */
-    public function index(array $options = []);
-
+     * @param string $email
+     * @param array  $mergeVars
+     * @param string $list
+     *
+     * @return mixed
+     */
+    public function subscribe($email, $mergeVars = [], $list = '');
 
     /**
-     * Create a new resource in storage.
+     * Unsubscribe the email address to given list.
      *
-     * @param  array  $parameters Pass the details for the list
+     * @param string $email
+     * @param $list
      *
-     * @return mixed  
+     * @return mixed
      */
-    public function create($name, $permission_reminder, $email_type_option = false, array $contact, array $campaign_defaults);
-
-
-	/**
-     * Display the specified resource.
-	 *
-	 * @param  string $listId
-     * @param array $options
-	 *
-	 * @return Illuminate\Support\Collection       
-	 */
-    public function show($listId, array $options = []);
-
+    public function unsubscribe($email, $list = '');
 
     /**
-     * Remove the specified resource from storage.
+     * Update a member subscribed to a list.
      *
-	 * @param  string $listId
-	 *
-     * @return mixed  
+     * @param string $email
+     * @param array  $mergeVars
+     * @param bool   $replaceInterests
+     * @param string $listName
+     * 
+     * @return mixed
      */
-    public function destroy($listId);
-
+    public function updateMember($email, $mergeVars, $replaceInterests = true, $listName);
 }

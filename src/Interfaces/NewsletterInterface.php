@@ -2,104 +2,98 @@
 
 namespace Cristake\Newsletter\Interfaces;
 
+/**
+ * Interface NewsletterCampaign.
+ */
 interface NewsletterInterface
 {
     /**
-     * Display all available lists
+     * Delete a newsletter campaign.
      *
-	 * @return Illuminate\Support\Collection       
+     * @param $campaignId
+     *
+     * @return mixed
      */
-	public function getAllLists(array $options = []);
-
+    public function deleteCampaign($campaignId);
 
     /**
-     * Create a new list
+     * Create a new newsletter campaign.
      *
-     * Mandatory parameters:
-     * name, permission_reminder, email_type_option, contact, campaign_defaults
+     * @param $list
+     * @param $subject
+     * @param $content
      *
-     * @param  array  $parass
-     *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function createList($name);
-
+    public function createCampaign($list, $subject, $content);
 
     /**
-     * Shows the list details
+     * Create a new newsletter campaign.
      *
-     * @param  string  $listId
-     * @param  array  $options
+     * @param $campaignId string
+     * @param $name string
+     * @param $value array
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function showList($listId, array $options = []);
-
+    public function updateCampaign($campaignId, $name, $value = []);
 
     /**
-     * Delete a list
+     * Send a test newsletter campaign.
      *
-     * @param  string  $listId
+     * @param string       $campaignId
+     * @param string|array $emails
+     * @param string       $sendType
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function deleteList($listId);
-
+    public function sendTestCampaign($campaignId, $emails, $sendType = '');
 
     /**
-    
-     * List all members of a list
+     * Send a newsletter campaign.
      *
-     * @param  string  $listId
-     * @param  array  $options
+     * @param string $campaignId
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function getMembersFromList($listId, array $options = []);
-
+    public function sendCampaign($campaignId);
 
     /**
-     * Subscribe a new member to a list
+     * Subscribe the email address to given list.
      *
-     * @param $email        string
-     * @param $mergeFields  array
-     * @param $listId       string
+     * @param $email
+     * @param array  $mergeVars
+     * @param string $list
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function subscribe($email, array $mergeFields, $listId);
-
+    public function subscribe($email, $mergeVars = [], $list = '');
 
     /**
-     * Unsubscribe a member from a list
+     * Update a member subscribed to a list.
      *
-     * @param $listid       string
-     * @param $memberId     string
+     * @param $email
+     * @param array  $mergeVars
+     * @param string $list
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function unsubscribe($listId, $memberId);
-
+    public function updateMember($email, $mergeVars = [],  $list = '');
 
     /**
-     * Show a member from a list
+     * Unsubscribe the email address to given list.
      *
-     * @param $listid       string
-     * @param $memberId     string
-     * @param $options      associative_array
+     * @param $email
+     * @param $list
      *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function showMember($listId, $memberId, array $options = []);
-
+    public function unsubscribe($email, $list = '');
 
     /**
-     * Delete a member from a list
+     * Get the instance of the underlying api.
      *
-     * @param  string  $listId
-     * @param  string  $memberId
-     *
-     * @return Illuminate\Support\Collection       
+     * @return mixed
      */
-    public function deleteMember($listId, $memberId);
+    public function getApi();
 }

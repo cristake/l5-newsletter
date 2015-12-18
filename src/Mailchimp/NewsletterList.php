@@ -1,72 +1,118 @@
 <?php
 
-namespace Cristake\Newsletter\Mailchimp;
+namespace Cristake\Newsletter\MailChimp;
 
+use Cristake\Newsletter\Exceptions\AlreadySubscribed;
+use Cristake\Newsletter\Exceptions\ServiceRefusedSubscription;
 use Cristake\Newsletter\Interfaces\NewsletterListInterface;
 
-class NewsletterList extends MailchimpBase implements NewsletterListInterface
+class NewsletterList extends MailChimpBase implements NewsletterListInterface
 {
     /**
-     * Display a listing of the resource.
+     * Subscribe a user to a MailChimp list.
      *
-     * @return Illuminate\Support\Collection       
+     * @param $email
+     * @param array  $mergeVars
+     * @param string $listName
+     *
+     * @return array
+     *
+     * @throws AlreadySubscribed
+     * @throws ServiceRefusedSubscription
+     * @throws \Exception
      */
-    public function index(array $options = [])
+    public function subscribe($email, $mergeVars = [], $listName = '')
     {
-        return $this->mailchimp
-            ->get('lists', $options);
+        $listProperties = $this->getListProperties($listName);
+
+        $emailType = 'html';
+        $requireDoubleOptin = false;
+        $updateExistingUser = false;
+
+        if (isset($listProperties['subscribe'])) {
+            $emailType = $listProperties['subscribe']['emailType'];
+            $requireDoubleOptin = $listProperties['subscribe']['requireDoubleOptin'];
+            $updateExistingUser = $listProperties['subscribe']['updateExistingUser'];
+        }
+
+        try {
+            return $this->mailChimp->lists->subscribe(
+                $listProperties['id'],
+                compact('email'),
+                $mergeVars,
+                $emailType,
+                $requireDoubleOptin,
+                $updateExistingUser
+            );
+        } catch (\Mailchimp_List_AlreadySubscribed $exception) {
+            throw new AlreadySubscribed();
+        } catch (\Mailchimp_Error $exception) {
+            throw new ServiceRefusedSubscription($exception->getMessage());
+        }
     }
 
+    /**
+     * Unsubscribe a user from a MailChimp list.
+     *
+     * @param string $email
+     * @param string $listName
+     *
+     * @return associative_array
+     */
+    public function unsubscribe($email, $listName = '')
+    {
+        $listProperties = $this->getListProperties($listName);
+
+        $deletePermanently = false;
+        $sendGoodbyeEmail = false;
+        $sendUnsubscribeEmail = false;
+
+        if (isset($listProperties['unsubscribe'])) {
+            $deletePermanently = $listProperties['unsubscribe']['deletePermanently'];
+            $sendGoodbyeEmail = $listProperties['unsubscribe']['sendGoodbyeEmail'];
+            $sendUnsubscribeEmail = $listProperties['unsubscribe']['sendUnsubscribeEmail'];
+        }
+
+        return $this->mailChimp->lists->unsubscribe(
+            $listProperties['id'],
+            compact('email'),
+            $deletePermanently,
+            $sendGoodbyeEmail,
+            $sendUnsubscribeEmail
+        );
+    }
 
     /**
-     * Create a new resource in storage.
+     * Update a member subscribed to a list.
      *
-     * @param  array  $parameters Pass the details for the list
+     * @param string $email
+     * @param array  $mergeVars
+     * @param bool   $replaceInterests
+     * @param string $listName
      *
-     * @return mixed  
+     * @return \Cristake\Newsletter\MailChimp\associative_array
+     *
+     * @throws \Exception
      */
-    public function create($name, $permission_reminder, $email_type_option = false, array $contact, array $campaign_defaults)
+    public function updateMember($email, $mergeVars = [], $replaceInterests = true, $listName = '')
     {
-		return $this->mailchimp
-            ->post(
-                'lists',
-                [
-                    'name' => $name,
-                    'permission_reminder' => 'You are receiving this because you signed up for updates on http://www.edugent.com.',
-                    'email_type_option' => $email_type_option,
-                    'contact' => $contact,
-                    'campaign_defaults' => $campaign_defaults
-                ]
+        $listProperties = $this->getListProperties($listName);
+
+        $emailType = 'html';
+
+        if (isset($listProperties['updateMember'])) {
+            $emailType = $listProperties['updateMember']['emailType'];
+        }
+
+        return $this
+            ->mailChimp
+            ->lists
+            ->updateMember(
+                $listProperties['id'],
+                compact('email'),
+                $mergeVars,
+                $emailType,
+                $replaceInterests
             );
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  string $listId List ID
-     * @param  array $options
-     *
-     * @return Illuminate\Support\Collection       
-     */
-    public function show($listId, array $options = [])
-    {
-        return $this->mailchimp
-            ->get(sprintf('lists/%s', $listId), $options);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  string $listId List ID
-     *
-     * @return mixed  
-     */
-    public function destroy($listId)
-    {
-        return $this->mailchimp
-            ->delete(sprintf('lists/%s', $listId));
-    }
-
-
 }
