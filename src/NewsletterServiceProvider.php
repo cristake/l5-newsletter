@@ -3,7 +3,7 @@
 namespace Cristake\Newsletter;
 
 use Illuminate\Support\ServiceProvider;
-use Mailchimp;
+use Mailchimp\Mailchimp;
 
 class NewsletterServiceProvider extends ServiceProvider
 {
